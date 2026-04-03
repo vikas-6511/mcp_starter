@@ -20,4 +20,14 @@ jobs:
 
       - name: Check Python Syntax
         run: |
-            git ls-files '*.py' | xargs -r python -m py_compile
+            files=$(git ls-files '*.py')
+
+            if [ -z "$files" ]; then
+            echo "No Python files detected. Skipping syntax check."
+            exit 0
+            fi
+
+            echo "Python files found:"
+            echo "$files"
+
+            python -m py_compile $files
