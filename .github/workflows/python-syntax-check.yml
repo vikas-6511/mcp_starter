@@ -20,4 +20,8 @@ jobs:
 
       - name: Check Python Syntax
         run: |
-          python -m py_compile $(git ls-files '*.py')
+            files=$(git ls-files '*.py')
+            if [ -z "$files" ]; then
+            echo "No Python files found."
+            else
+            python -m py_compile $files
