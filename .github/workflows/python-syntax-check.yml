@@ -1,0 +1,33 @@
+name: Python Syntax Check
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  syntax-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Check Python Syntax
+        run: |
+            files=$(git ls-files '*.py')
+
+            if [ -z "$files" ]; then
+            echo "No Python files detected. Skipping syntax check."
+            exit 0
+            fi
+
+            echo "Python files found:"
+            echo "$files"
+
+            python -m py_compile $files
