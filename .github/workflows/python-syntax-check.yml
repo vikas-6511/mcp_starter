@@ -20,9 +20,4 @@ jobs:
 
       - name: Check Python Syntax
         run: |
-          python_files=$(git ls-files '*.py')
-          if [ -z "$python_files" ]; then
-            echo "No Python files found in this PR"
-            exit 0
-          fi
-          python -m py_compile $python_files
+            git ls-files '*.py' | xargs -r python -m py_compile
